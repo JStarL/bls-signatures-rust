@@ -203,15 +203,6 @@ fn bls_ops(start: &mut Instant, duration: &mut Duration, micros: &mut u128, tota
     
     println!("TOTAL RELEVANT TIME: {} usecs", total_relevant_micros);
 
-    // Generate a key pair
-    // let (secret_key, public_key) = generate_keypair();
-
-    // Sign the message
-    // let signature = sign(msg, &secret_key);
-
-    // Verify the signature
-    // let is_valid = verify_signature(msg, &signature, &public_key);
-
     if is_valid {
         println!("Aggregate Signature is valid!");
     } else {
@@ -308,93 +299,3 @@ fn verify_aggregate(agg_sig: &G2Affine, msg: &[u8], public_keys: &Vec<G1Affine>)
 
 }
 
-
-// use blst::blst_scalar;
-// use blstrs::{G1Projective, G1Affine, G2Affine, G2Projective, Scalar, pairing};
-// use rand::rngs::OsRng;
-// use ff::Field;
-// use group::{Group, Curve};
-
-// const CSUITE: &[u8] = b"BLS_SIG_BLS12381G2_XMD:SHA-256_SSWU_RO_NUL_";
-// const MSG: &str = "AAABBBCCCDDD";
-// // const NUM_TXS: u32 = 4000;
-
-
-// fn main() {
-    
-//     // let msg: String = String::from(MSG);
-
-//     // let mut keys: Vec<(Scalar, G1Affine)> = Vec::new();
-
-//     // for _ in 0..NUM_TXS {
-//     //     keys.push(generate_keypair())
-//     // }
-
-//     let (priv_key, pub_key) = generate_keypair();
-
-//     // println!("The Key Pairs are: {:?}", keys);
-
-//     // hash(MSG.as_bytes())
-//     // println!("The signature is: {:?}", sign(MSG, &((*keys.get(0).unwrap()).0)));
-
-//     let sig = sign(MSG, &priv_key);
-
-//     // println!("The first private key is: {:?}", keys.get(0).unwrap());
-
-//     let is_valid = verify_signature(MSG, &sig, &pub_key);
-
-//     if is_valid {
-//         println!("Sig is valid!");
-//     } else {
-//         println!("Sig is invalid");
-//     }
-    
-// }
-
-// fn generate_keypair() -> (Scalar, G1Affine) {
-//     let sk = Scalar::random(&mut OsRng);
-
-//     let pk = G1Projective::generator() * sk;
-
-//     let pk_affine = G1Affine::from(pk);
-
-//     (sk, pk_affine)
-
-// }
-
-// fn hash(msg: &[u8]) -> G2Projective {
-//     G2Projective::hash_to_curve(msg, CSUITE, &[])
-// }
-
-// fn sign(msg: &str, private_key: &Scalar) -> G2Affine {
-    
-//     let p = hash(msg.as_bytes());
-//     let sig = p * private_key;
-
-//     sig.to_affine()
-
-    
-//     // unsafe {
-//     //     let private_key_blst: blst_scalar = (*private_key).clone().into();
-//     //     blst::blst_sign_pk2_in_g1(
-//     //         std::ptr::null_mut(),
-//     //         sig.as_mut(),
-//     //         p.as_ref(),
-//     //         &private_key_blst
-//     //     );
-//     // }
-
-//     // sig
-// }
-
-// fn verify_signature(msg: &str, sig: &G2Affine, public_key: &G1Affine) -> bool {
-//     let hashed_message = hash(msg.as_bytes()).to_affine();
-
-//     let sig_pairing = pairing(public_key, sig);
-//     let msg_pairing = pairing(&G1Projective::generator().to_affine(), &hashed_message);
-
-//     println!("Sig Pairing: {:?}", sig_pairing);
-//     println!("Msg Pairing: {:?}", msg_pairing);
-
-//     sig_pairing == msg_pairing
-// }
